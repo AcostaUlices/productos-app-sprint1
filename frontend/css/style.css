@@ -1,0 +1,119 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #222;
+}
+
+header {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formulario-container, .listado-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+input, select, textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.6rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #1a1a2e;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #393973;
+}
+
+#btn-cancelar {
+  background-color: #888;
+}
+
+#btn-cancelar:hover {
+  background-color: #666;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.6rem;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+.btn-editar, .btn-eliminar {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  margin-right: 0.3rem;
+}
+
+.btn-eliminar {
+  background-color: #c0392b;
+}
+
+.btn-eliminar:hover {
+  background-color: #962d22;
+}
+
+.mensaje-exito {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.mensaje-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
