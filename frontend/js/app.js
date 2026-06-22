@@ -51,10 +51,35 @@ function renderizarTabla(productos) {
 
 // Validación básica en el frontend
 function validarFormulario() {
-  if (!inputNombre.value.trim()) return 'El nombre es obligatorio';
-  if (!inputCategoria.value) return 'Seleccioná una categoría';
-  if (inputPrecio.value === '' || Number(inputPrecio.value) < 0) return 'El precio debe ser un número positivo';
-  if (inputStock.value === '' || Number(inputStock.value) < 0) return 'El stock debe ser un número positivo';
+  const nombre = inputNombre.value.trim();
+  const categoria = inputCategoria.value;
+  const precio = inputPrecio.value;
+  const stock = inputStock.value;
+
+  if (!nombre) {
+    return 'El nombre es obligatorio';
+  }
+
+  if (!categoria) {
+    return 'Seleccioná una categoría';
+  }
+
+  if (precio === '') {
+    return 'El precio es obligatorio';
+  }
+
+  if (isNaN(Number(precio)) || Number(precio) <= 0) {
+    return 'El precio debe ser un número mayor a 0';
+  }
+
+  if (stock === '') {
+    return 'El stock es obligatorio';
+  }
+
+  if (!Number.isInteger(Number(stock)) || Number(stock) < 0) {
+    return 'El stock debe ser un número entero positivo';
+  }
+
   return null;
 }
 
@@ -145,9 +170,19 @@ function resetearFormulario() {
   btnCancelar.style.display = 'none';
 }
 
+
+const modalOverlay = document.getElementById('modal-overlay');
+const modalBox = document.getElementById('modal-box');
+const modalMensaje = document.getElementById('modal-mensaje');
+const modalCerrar = document.getElementById('modal-cerrar');
+
 function mostrarMensaje(elemento, texto, tipo) {
-  elemento.innerHTML = `<div class="mensaje-${tipo}">${texto}</div>`;
-  setTimeout(() => {
-    elemento.innerHTML = '';
-  }, 3000);
+  modalMensaje.textContent = texto;
+  modalBox.className = 'modal-box';
+  modalBox.classList.add(tipo === 'exito' ? 'modal-exito' : 'modal-error');
+  modalOverlay.style.display = 'flex';
 }
+
+modalCerrar.addEventListener('click', () => {
+  modalOverlay.style.display = 'none';
+});
