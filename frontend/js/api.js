@@ -9,30 +9,39 @@ async function obtenerProductos() {
 async function crearProducto(producto) {
   const res = await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${obtenerToken()}`,
+    },
     body: JSON.stringify(producto),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Error al crear producto');
+  if (!res.ok) throw new Error(data.mensaje || data.error || 'Error al crear producto');
   return data;
 }
 
 async function editarProducto(id, producto) {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${obtenerToken()}`,
+    },
     body: JSON.stringify(producto),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Error al editar producto');
+  if (!res.ok) throw new Error(data.mensaje || data.error || 'Error al editar producto');
   return data;
 }
 
 async function eliminarProducto(id) {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${obtenerToken()}`,
+    },
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Error al eliminar producto');
+  if (!res.ok) throw new Error(data.mensaje || data.error || 'Error al eliminar producto');
   return data;
 }

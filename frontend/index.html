@@ -11,8 +11,14 @@
   <header>
     <h2>Tienda de Hardware</h2>
   </header>
+    <nav id="navbar" class="navbar">
+      <span id="navbar-usuario"></span>
+        <a href="users.html" id="link-usuarios" style="display: none;">Usuarios</a>
+        <a href="login.html" id="link-login">Iniciar sesión</a>
+      <button id="btn-logout" style="display: none;">Cerrar sesión</button>
+    </nav>
 
-  <main>
+    <main>
     <!-- Formulario para crear/editar -->
     <section class="formulario-container">
       <h2 id="form-titulo">Nuevo Producto</h2>
@@ -80,6 +86,7 @@
     </div>
   </div>
 
+  <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/app.js"></script>
 </body>

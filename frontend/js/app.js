@@ -1,3 +1,42 @@
+const navbarUsuario = document.getElementById('navbar-usuario');
+const linkLogin = document.getElementById('link-login');
+const btnLogout = document.getElementById('btn-logout');
+
+function actualizarNavbar() {
+  const usuario = obtenerUsuario();
+  const linkUsuarios = document.getElementById('link-usuarios');
+  
+  if (usuario) {
+    navbarUsuario.textContent = `${usuario.nombre} (${usuario.rol})`;
+    linkLogin.style.display = 'none';
+    btnLogout.style.display = 'inline-block';
+    linkUsuarios.style.display = usuario.rol === 'SUPERADMIN' ? 'inline-block' : 'none';
+  } else {
+    navbarUsuario.textContent = '';
+    linkLogin.style.display = 'inline-block';
+    btnLogout.style.display = 'none';
+    linkUsuarios.style.display = 'none';
+  }
+}
+actualizarNavbar();
+
+const formularioContainer = document.querySelector('.formulario-container');
+if (!puedeGestionarProductos()) {
+  formularioContainer.style.display = 'none';
+}
+
+function puedeGestionarProductos() {
+  const usuario = obtenerUsuario();
+  return usuario && (usuario.rol === 'ADMIN' || usuario.rol === 'SUPERADMIN');
+}
+
+btnLogout.addEventListener('click', () => {
+  cerrarSesion();
+  window.location.href = 'login.html'; // HU4: redirige a la pantalla de acceso
+});
+
+actualizarNavbar();
+
 const form = document.getElementById('form-producto');
 const formTitulo = document.getElementById('form-titulo');
 const btnSubmit = document.getElementById('btn-submit');
@@ -32,6 +71,8 @@ function renderizarTabla(productos) {
     tablaBody.innerHTML = '<tr><td colspan="5">No hay productos cargados.</td></tr>';
     return;
   }
+  
+  const esAdmin = puedeGestionarProductos();
 
   productos.forEach((p) => {
     const fila = document.createElement('tr');
@@ -40,9 +81,11 @@ function renderizarTabla(productos) {
       <td>${p.categoria}</td>
       <td>$${p.precio.toLocaleString('es-AR')}</td>
       <td>${p.stock}</td>
-      <td>
-        <button class="btn-editar" data-id="${p.id}">Editar</button>
-        <button class="btn-eliminar" data-id="${p.id}">Eliminar</button>
+       <td>
+        ${esAdmin ? `
+          <button class="btn-editar" data-id="${p.id}">Editar</button>
+          <button class="btn-eliminar" data-id="${p.id}">Eliminar</button>
+        ` : '<span style="color: #999;">Solo lectura</span>'}
       </td>
     `;
     tablaBody.appendChild(fila);

@@ -2,6 +2,8 @@ import { Router } from 'express';
 import prisma from '../prismaClient.js';
 import ValidationError from '../errors/ValidationError.js';
 import NotFoundError from '../errors/NotFoundError.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
 
 const router = Router();
 
@@ -10,7 +12,6 @@ function validarProducto(data, esEdicion = false) {
   const { nombre, categoria, precio, stock } = data;
 
   if (!esEdicion) {
-    // En creación, los campos obligatorios deben venir sí o sí
     if (!nombre || !categoria || precio === undefined || stock === undefined) {
       throw new ValidationError('Faltan campos obligatorios: nombre, categoria, precio y stock son requeridos');
     }
@@ -47,13 +48,13 @@ function validarProducto(data, esEdicion = false) {
   }
 }
 
-// GET /productos - listar todos
+// GET /productos - listar todos (público)
 router.get('/', async (req, res) => {
   const productos = await prisma.producto.findMany();
   res.json(productos);
 });
 
-// GET /productos/:id - obtener uno
+// GET /productos/:id - obtener uno (público)
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const producto = await prisma.producto.findUnique({
@@ -67,8 +68,8 @@ router.get('/:id', async (req, res) => {
   res.json(producto);
 });
 
-// POST /productos - crear
-router.post('/', async (req, res) => {
+// POST /productos - crear (solo ADMIN)
+router.post('/', authMiddleware, roleMiddleware(['ADMIN']), async (req, res) => {
   const { nombre, categoria, precio, stock, descripcion } = req.body;
 
   validarProducto(req.body);
@@ -80,8 +81,8 @@ router.post('/', async (req, res) => {
   res.status(201).json(nuevoProducto);
 });
 
-// PUT /productos/:id - editar
-router.put('/:id', async (req, res) => {
+// PUT /productos/:id - editar (solo ADMIN)
+router.put('/:id', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), async (req, res) => {
   const { id } = req.params;
   const { nombre, categoria, precio, stock, descripcion } = req.body;
 
@@ -103,8 +104,8 @@ router.put('/:id', async (req, res) => {
   res.json(productoActualizado);
 });
 
-// DELETE /productos/:id - eliminar
-router.delete('/:id', async (req, res) => {
+// DELETE /productos/:id - eliminar (solo ADMIN)
+router.delete('/:id', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), async (req, res) => {
   const { id } = req.params;
 
   const productoExistente = await prisma.producto.findUnique({
