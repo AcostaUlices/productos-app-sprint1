@@ -18,44 +18,7 @@ Permite listar, crear, editar y eliminar productos de hardware (placas de video,
 - HTML5, CSS3, JavaScript Vanilla (sin frameworks)
 - localStorage para persistencia de sesión
 
-## Estructura del proyecto
-productos-app-sprint1/
-├── backend/
-│├── prisma/
-││├── schema.prisma
-││└── migrations/
-│├── src/
-││├── routes/
-│││├── productos.routes.js
-│││├── auth.routes.js
-│││└── usuarios.routes.js
-││├── middlewares/
-│││├── errorHandler.js
-│││├── authMiddleware.js
-│││└── roleMiddleware.js
-││├── errors/
-│││├── AppError.js
-│││├── ValidationError.js
-│││├── NotFoundError.js
-│││├── UnauthorizedError.js
-│││└── ConflictError.js
-││├── prismaClient.js
-││└── index.js
-│├── .env
-│└── package.json
-├── frontend/
-│   ├── css/style.css
-│   ├── js/
-│   │   ├── auth.js
-│   │   ├── api.js
-│   │   ├── usersApi.js
-│   │   ├── app.js
-│   │   ├── usersApp.js
-│   │   └── login.js
-│   ├── index.html
-│   ├── login.html
-│   └── users.html
-└── README.md
+
 
 ## Instalación
 
