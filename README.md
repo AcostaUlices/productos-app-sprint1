@@ -25,7 +25,7 @@ Permite listar, crear, editar y eliminar productos de hardware (placas de video,
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPO>
+[git clone <URL_DEL_REPO>](https://github.com/AcostaUlices/productos-app-sprint1.git)
 cd productos-app-sprint1
 ```
 
