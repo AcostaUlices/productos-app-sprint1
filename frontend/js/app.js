@@ -78,7 +78,7 @@ function renderizarTabla(productos) {
     const fila = document.createElement('tr');
     fila.innerHTML = `
       <td>${p.nombre}</td>
-      <td>${p.categoria}</td>
+      <td><span class="categoria-chip">${p.categoria}</span></td>
       <td>$${p.precio.toLocaleString('es-AR')}</td>
       <td>${p.stock}</td>
        <td>

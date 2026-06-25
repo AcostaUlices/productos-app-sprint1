@@ -121,9 +121,11 @@ El backend centraliza el manejo de errores con clases personalizadas (`Validatio
 {
   "error": "NombreDelError",
   "mensaje": "Descripción legible del problema"
+
 }
 ```
 
 ## Autor
 
 Ulices Mateo Acosta
+=======

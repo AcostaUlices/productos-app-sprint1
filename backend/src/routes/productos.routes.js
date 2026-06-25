@@ -68,8 +68,8 @@ router.get('/:id', async (req, res) => {
   res.json(producto);
 });
 
-// POST /productos - crear (solo ADMIN)
-router.post('/', authMiddleware, roleMiddleware(['ADMIN']), async (req, res) => {
+// POST /productos - crear 
+router.post('/', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), async (req, res) => {
   const { nombre, categoria, precio, stock, descripcion } = req.body;
 
   validarProducto(req.body);
@@ -81,7 +81,7 @@ router.post('/', authMiddleware, roleMiddleware(['ADMIN']), async (req, res) => 
   res.status(201).json(nuevoProducto);
 });
 
-// PUT /productos/:id - editar (solo ADMIN)
+// PUT /productos/:id - editar 
 router.put('/:id', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), async (req, res) => {
   const { id } = req.params;
   const { nombre, categoria, precio, stock, descripcion } = req.body;
@@ -104,7 +104,7 @@ router.put('/:id', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), asyn
   res.json(productoActualizado);
 });
 
-// DELETE /productos/:id - eliminar (solo ADMIN)
+// DELETE /productos/:id - eliminar 
 router.delete('/:id', authMiddleware, roleMiddleware(['ADMIN', 'SUPERADMIN']), async (req, res) => {
   const { id } = req.params;
 
