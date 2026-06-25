@@ -18,14 +18,12 @@ Permite listar, crear, editar y eliminar productos de hardware (placas de video,
 - HTML5, CSS3, JavaScript Vanilla (sin frameworks)
 - localStorage para persistencia de sesión
 
-
-
 ## Instalación
 
 ### 1. Clonar el repositorio
 
 ```bash
-[git clone <URL_DEL_REPO>](https://github.com/AcostaUlices/productos-app-sprint1.git)
+git clone https://github.com/AcostaUlices/productos-app-sprint1.git
 cd productos-app-sprint1
 ```
 
@@ -36,12 +34,14 @@ cd backend
 npm install
 ```
 
-Crear un archivo `.env` en `backend` con:
+Crear un archivo `.env` en `backend/` con:
 
-```env
-DATABASE_URL="mysql://root:TU_CONTRASEÑA@localhost:3306/productos_db" (Aclaracion en esta parte no pongo mi contraseña y solo doy un ejemplo de lo que se tendria que poner)
-JWT_SECRET="tu_frase_secreta_larga_y_dificil_de_adivinar" (Mismo caso que el anterior)
 ```
+DATABASE_URL="mysql://root:TU_CONTRASEÑA@localhost:3306/productos_db"
+JWT_SECRET="tu_frase_secreta_larga_y_dificil_de_adivinar"
+```
+
+> ⚠️ Reemplazá `TU_CONTRASEÑA` y `tu_frase_secreta_larga_y_dificil_de_adivinar` con tus valores reales. No compartir este archivo.
 
 Aplicar las migraciones:
 
@@ -53,8 +53,9 @@ npx prisma migrate dev
 
 Por seguridad, no existe ninguna ruta pública para crear un SUPERADMIN. El primer usuario con ese rol se asigna manualmente:
 
-1. Registrar un usuario normal desde `POST /auth/register` (Thunder Client o desde la app)
+1. Registrar un usuario normal desde `POST /auth/register` o desde la página `register.html`
 2. En MySQL Workbench, ejecutar:
+
 ```sql
 UPDATE Usuario SET rol = 'SUPERADMIN' WHERE email = 'tu_email@ejemplo.com';
 ```
@@ -78,40 +79,46 @@ Disponible en `http://localhost:3000`
 
 Abrir `frontend/login.html` con Live Server (extensión de VS Code).
 
+Las páginas disponibles son:
+- `login.html` — Iniciar sesión
+- `register.html` — Registrar nuevo usuario
+- `index.html` — Catálogo y gestión de productos
+- `users.html` — Gestión de usuarios (solo SUPERADMIN)
+
 ## Roles del sistema
 
-| Rol | Permisos |
-|---|---|
-| USUARIO | Solo puede ver el catálogo de productos |
-| ADMIN | Puede crear, editar y eliminar productos |
+| Rol        | Permisos                                                                                                                |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| USUARIO    | Solo puede ver el catálogo de productos                                                                                 |
+| ADMIN      | Puede crear, editar y eliminar productos                                                                                |
 | SUPERADMIN | Todo lo de ADMIN + gestionar usuarios (cambiar rol, eliminar). No puede ser modificado ni eliminado por otro SUPERADMIN |
 
 ## Endpoints de la API
 
-### Productos
-
-| Método | Ruta | Acceso | Descripción |
-|--------|------|--------|--------------|
-| GET | /productos | Público | Listar productos |
-| GET | /productos/:id | Público | Obtener un producto |
-| POST | /productos | ADMIN / SUPERADMIN | Crear producto |
-| PUT | /productos/:id | ADMIN / SUPERADMIN | Editar producto |
-| DELETE | /productos/:id | ADMIN / SUPERADMIN | Eliminar producto |
-
 ### Autenticación
 
-| Método | Ruta | Descripción |
-|--------|------|--------------|
-| POST | /auth/register | Registrar un nuevo usuario |
-| POST | /auth/login | Iniciar sesión, devuelve un JWT |
+| Método | Ruta           | Descripción                     |
+| ------ | -------------- | ------------------------------- |
+| POST   | /auth/register | Registrar un nuevo usuario      |
+| POST   | /auth/login    | Iniciar sesión, devuelve un JWT |
+
+### Productos
+
+| Método | Ruta           | Acceso             | Descripción         |
+| ------ | -------------- | ------------------ | ------------------- |
+| GET    | /productos     | Público            | Listar productos    |
+| GET    | /productos/:id | Público            | Obtener un producto |
+| POST   | /productos     | ADMIN / SUPERADMIN | Crear producto      |
+| PUT    | /productos/:id | ADMIN / SUPERADMIN | Editar producto     |
+| DELETE | /productos/:id | ADMIN / SUPERADMIN | Eliminar producto   |
 
 ### Usuarios (gestión)
 
-| Método | Ruta | Acceso | Descripción |
-|--------|------|--------|--------------|
-| GET | /usuarios | SUPERADMIN | Listar usuarios |
-| PUT | /usuarios/:id/rol | SUPERADMIN | Cambiar rol (ADMIN o USUARIO únicamente) |
-| DELETE | /usuarios/:id | SUPERADMIN | Eliminar usuario |
+| Método | Ruta              | Acceso     | Descripción                              |
+| ------ | ----------------- | ---------- | ---------------------------------------- |
+| GET    | /usuarios         | SUPERADMIN | Listar usuarios                          |
+| PUT    | /usuarios/:id/rol | SUPERADMIN | Cambiar rol (ADMIN o USUARIO únicamente) |
+| DELETE | /usuarios/:id     | SUPERADMIN | Eliminar usuario                         |
 
 ## Manejo de errores
 
@@ -121,11 +128,9 @@ El backend centraliza el manejo de errores con clases personalizadas (`Validatio
 {
   "error": "NombreDelError",
   "mensaje": "Descripción legible del problema"
-
 }
 ```
 
 ## Autor
 
-Ulices Mateo Acosta
-=======
+**Ulices Mateo Acosta**
